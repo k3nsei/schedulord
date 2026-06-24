@@ -1,0 +1,15 @@
+services:
+  schedulord:
+    image: ghcr.io/k3nsei/schedulord:latest
+    restart: unless-stopped
+    user: "1000:1000"
+    secrets:
+      - source: schedulord_gh_token
+        target: gh_token
+        mode: 0440
+    volumes:
+      - ./config.yml:/app/config.yml:ro
+
+secrets:
+  schedulord_gh_token:
+    external: true

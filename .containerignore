@@ -1,0 +1,39 @@
+# Binaries
+**/bin/
+**/*.exe
+**/*.exe~
+**/*.dll
+**/*.so
+**/*.dylib
+
+# Env Files
+**/.env
+**/.env.*
+
+# Logs
+**/logs/
+**/*.log
+
+# Git Files
+**/.git/
+**/.gitignore
+**/.gitattributes
+
+# IDE and editor files
+**/.idea/
+**/.vscode/
+
+# Mise-en-place Files
+**/mise.toml
+
+# OS Files
+**/.DS_Store
+**/Thumbs.db
+
+# Oxfmt Files
+**/.oxfmtrc.json
+
+# Podman Files
+**/.containerignore
+**/Containerfile
+**/compose.ya?ml

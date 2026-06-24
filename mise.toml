@@ -1,0 +1,6 @@
+[tools]
+go = "latest"
+gofumpt = "latest"
+golangci-lint = "latest"
+goreleaser = "latest"
+oxfmt = "latest"
