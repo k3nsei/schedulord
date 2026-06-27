@@ -1,4 +1,8 @@
+# GitHub
+**/.github/
+
 # Binaries
+**/dist/
 **/bin/
 **/*.exe
 **/*.exe~

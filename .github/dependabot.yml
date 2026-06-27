@@ -1,0 +1,60 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directories:
+      - "/"
+      - "/.github/actions/*"
+    target-branch: "main"
+    labels:
+      - "actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    schedule:
+      interval: "weekly"
+      timezone: "Europe/Warsaw"
+      day: "monday"
+      time: "09:00"
+    groups:
+      all:
+        patterns: ["*"]
+
+  - package-ecosystem: "docker"
+    directories:
+      - "/"
+      - "/.goreleaser"
+    target-branch: "main"
+    labels:
+      - "containers"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    schedule:
+      interval: "weekly"
+      timezone: "Europe/Warsaw"
+      day: "monday"
+      time: "09:00"
+    cooldown:
+      default-days: 7
+    groups:
+      all:
+        patterns: ["*"]
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    target-branch: "main"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    schedule:
+      interval: "weekly"
+      timezone: "Europe/Warsaw"
+      day: "monday"
+      time: "09:00"
+    cooldown:
+      default-days: 7
+    groups:
+      all:
+        patterns: ["*"]

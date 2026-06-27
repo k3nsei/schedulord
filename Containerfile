@@ -16,9 +16,14 @@ RUN go mod download
 
 COPY . .
 
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
+ARG CGO_ENABLED=0
+ENV CGO_ENABLED=${CGO_ENABLED}
+
+ARG GOOS=linux
+ENV GOOS=${GOOS}
+
+ARG GOARCH=amd64
+ENV GOARCH=${GOARCH}
 
 RUN go build -o bin/schedulord ./cmd/schedulord
 
@@ -41,17 +46,6 @@ ENV UID=${UID}
 
 ARG GID=1000
 ENV GID=${GID}
-
-LABEL maintainer="Piotr Stępniewski"
-LABEL description="Schedulord is a simple, configurable job scheduler written in Go, designed to run as a containerized service."
-LABEL version="${VERSION}"
-
-LABEL org.opencontainers.image.title="Schedulord"
-LABEL org.opencontainers.image.description="Schedulord is a simple, configurable job scheduler written in Go, designed to run as a containerized service."
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.url="https://github.com/k3nsei/schedulord"
-LABEL org.opencontainers.image.documentation="https://github.com/k3nsei/schedulord"
-LABEL org.opencontainers.image.vendor="Piotr Stępniewski"
 
 RUN set -eux && \
     addgroup -g ${GID} ${GROUP} && \
