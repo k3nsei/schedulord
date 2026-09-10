@@ -1,15 +1,18 @@
 services:
   schedulord:
+    build:
+      context: .
+      dockerfile: Containerfile
     image: ghcr.io/k3nsei/schedulord:latest
     restart: unless-stopped
-    user: "1000:1000"
-    secrets:
-      - source: schedulord_gh_token
-        target: gh_token
-        mode: 0440
+    init: true
+    user: "65532:65532"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
     volumes:
       - ./config.yml:/app/config.yml:ro
-
-secrets:
-  schedulord_gh_token:
-    external: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777,nosuid,nodev,noexec

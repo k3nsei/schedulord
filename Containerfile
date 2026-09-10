@@ -25,45 +25,26 @@ ENV GOOS=${GOOS}
 ARG GOARCH=amd64
 ENV GOARCH=${GOARCH}
 
-RUN go build -o bin/schedulord ./cmd/schedulord
+RUN go build -o ./bin/schedulord ./cmd/schedulord
 
 # ==================================================
 # Runtime
 # ==================================================
-FROM alpine:3.24.1
+FROM gcr.io/distroless/static-debian13:nonroot
 
 ARG VERSION=v0.0.0
 ENV VERSION=${VERSION}
 
-ARG USER=schedulord
-ENV USER=${USER}
-
-ARG GROUP=schedulord
-ENV GROUP=${GROUP}
-
-ARG UID=1000
+ARG UID=65532
 ENV UID=${UID}
 
-ARG GID=1000
+ARG GID=65532
 ENV GID=${GID}
 
-RUN set -eux && \
-    addgroup -g ${GID} ${GROUP} && \
-    adduser -D -u ${UID} -G ${GROUP} ${USER} && \
-    mkdir /app && \
-    chown -R ${USER}:${GROUP} /app && \
-    true
-
-RUN set -eux && \
-    apk add --no-cache \
-      ca-certificates \
-      tzdata && \
-    true
-
-USER ${USER}:${GROUP}
+USER ${UID}:${GID}
 
 WORKDIR /app
 
-COPY --from=builder --chown=${USER}:${GROUP} --chmod=0755 /workspace/bin/schedulord /app/schedulord
+COPY --from=builder --chown=${UID}:${GID} --chmod=0755 /workspace/bin/schedulord /app/schedulord
 
 ENTRYPOINT ["/app/schedulord"]
