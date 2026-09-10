@@ -1,39 +1,20 @@
-FROM alpine:3.24.1
+FROM --platform=${TARGETPLATFORM} gcr.io/distroless/static-debian13:nonroot
 
 ARG TARGETPLATFORM
 
 ARG VERSION=v0.0.0
 ENV VERSION=${VERSION}
 
-ARG USER=schedulord
-ENV USER=${USER}
-
-ARG GROUP=schedulord
-ENV GROUP=${GROUP}
-
-ARG UID=1000
+ARG UID=65532
 ENV UID=${UID}
 
-ARG GID=1000
+ARG GID=65532
 ENV GID=${GID}
 
-RUN set -eux && \
-    addgroup -g ${GID} ${GROUP} && \
-    adduser -D -u ${UID} -G ${GROUP} ${USER} && \
-    mkdir /app && \
-    chown -R ${USER}:${GROUP} /app && \
-    true
-
-RUN set -eux && \
-    apk add --no-cache \
-      ca-certificates \
-      tzdata && \
-    true
-
-USER ${USER}:${GROUP}
+USER ${UID}:${GID}
 
 WORKDIR /app
 
-COPY --chown=${USER}:${GROUP} --chmod=0755 ${TARGETPLATFORM}/schedulord /app/schedulord
+COPY --chown=${UID}:${GID} --chmod=0755 ${TARGETPLATFORM}/schedulord /app/schedulord
 
 ENTRYPOINT ["/app/schedulord"]

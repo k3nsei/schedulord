@@ -23,6 +23,9 @@ profile.cov
 go.work
 go.work.sum
 
+# App Config
+/config.yml
+
 # Env
 .env
 .env.*

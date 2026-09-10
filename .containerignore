@@ -10,6 +10,9 @@
 **/*.so
 **/*.dylib
 
+# App Config
+config.yml
+
 # Env Files
 **/.env
 **/.env.*
@@ -37,7 +40,10 @@
 # Oxfmt Files
 **/.oxfmtrc.json
 
-# Podman Files
+# Container Files
 **/.containerignore
+**/.dockerignore
 **/Containerfile
+**/Dockerfile
 **/compose.ya?ml
+**/docker-compose.ya?ml
